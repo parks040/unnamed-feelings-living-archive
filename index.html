@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>html,body{margin:0}body{font-family:system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Unnamed Feelings</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Inter+Tight:wght@400&family=Commissioner:wght@300;400;500&family=Fraunces:opsz,wght,SOFT@9..144,300..400,0..100&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: black exhibition space, 12-col editorial grid, one chapter per screen, artworks keep their own color */
+:root{
+  --bg:#000000;
+  --fg:#ffffff;
+  --muted:#999999;
+  --line:#333333;
+  --panel:#111111;
+  --sans:"Instrument Sans","InOut",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --input:"Input Sans","InputSans","Input","Input Mono","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --soft:"Fraunces","Iowan Old Style",Georgia,serif;
+  --grotesk:"Helvetica Neue",Helvetica,"Inter Tight",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --small:"Commissioner","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --sans:var(--small);
+  --grotesk:var(--small);
+  --input:var(--small);
+  --mono:var(--small);
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+@media (min-width:900px){
+  :root{ --gutter-l:max(48px, env(safe-area-inset-left, 0px)); --gutter-r:max(48px, env(safe-area-inset-right, 0px)); }
+}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+*{box-sizing:border-box}
+::selection{background:var(--fg);color:var(--bg)}
+:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+
+/* top bar */
+.bar{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:18px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);
+  background:linear-gradient(var(--bg) 40%, transparent);pointer-events:none}
+.bar > *{pointer-events:auto}
+.bar .label b{color:var(--fg);font-weight:500}
+.index{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+.index a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.index a[aria-current="true"]{color:var(--fg)}
+.index a:hover{color:var(--fg)}
+
+/* 00 opening */
+.opening{display:block;padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:calc(env(safe-area-inset-top,0px) + 120px) 0}
+.opening-inner{margin-inline:auto;align-items:center;text-align:center;display:flex;flex-direction:column;gap:28px;max-width:1100px}
+.opening h1{margin:0;font-family:var(--soft);font-weight:300;font-optical-sizing:auto;font-variation-settings:"SOFT" 100;text-transform:none;font-size:clamp(40px,9.6vw,168px);line-height:.95;letter-spacing:-.02em;display:flex;flex-direction:column;align-items:center;gap:clamp(12px,1.6vw,24px)}
+.opening h1 .sub{font-family:var(--grotesk);font-weight:400;text-transform:none;letter-spacing:0;font-size:clamp(18px,1.9vw,28px);line-height:1.3;color:var(--muted)}
+.intro-wrap{display:flex;flex-direction:column;align-items:stretch;gap:14px;align-self:center;width:100%;max-width:46rem;text-align:left}
+.intro-wrap .intro{font-family:var(--input);font-weight:300;max-width:none}
+.opening .opening-inner{max-width:none;align-items:stretch}
+.opening .opening-inner h1{align-self:flex-start;align-items:flex-start;text-align:left}
+.opening .intro{margin:0;font-family:var(--grotesk);font-size:clamp(16px,1.35vw,19px);line-height:1.6;color:var(--fg);max-width:68ch;text-wrap:pretty}
+.opening .second{margin:0;font-size:clamp(22px,3vw,40px);line-height:1.2;letter-spacing:-.015em;color:var(--muted);text-wrap:balance;max-width:22ch}
+.cue{display:flex;align-items:center;gap:14px}
+.cue-line{width:1px;height:40px;background:var(--line);position:relative;overflow:hidden}
+.cue-line::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--fg);animation:cue 2.4s ease-in-out infinite}
+@keyframes cue{0%{top:-40%}100%{top:100%}}
+
+/* sketchbook stage */
+.stage{position:relative}
+.sticky{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:16px;overflow:hidden;padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+.sec-no{max-width:100%}
+@media (min-width:900px){
+  html body .meta > .t, html body .digi-t, html body .reflect p, html body .arch-intro, html body .rcpt-intro p{font-size:16px;line-height:1.65}
+  html body .cap-s{font-size:15px}
+  html body .cap-t{font-size:13px}
+  html body .label, html body .btn, html body .a-day{font-size:13px}
+  html body .sec-no, html body .limit-head .label, html body .tester > .label:first-child{font-size:14px}
+}
+.sec-link{color:inherit;text-decoration:none;display:inline-flex;align-items:center;min-height:32px}
+.sec-link:hover{opacity:.7}
+.sec-no,.limit-head .label{color:var(--fg);font-weight:600;font-size:13px}
+/* one shared left line: the left edge of the sketchbook video at full size */
+html body .limit{align-items:flex-start;padding-top:clamp(96px,14svh,150px)}
+html body .limit > *{margin-left:calc((100% - var(--frame-w,84vw)) / 2)}
+html body .limit > .book-frame{align-self:flex-start}
+/* body text runs the same width as the text under the sketchbook video */
+html body .limit > .reflect, html body .limit > .arch-intro, html body .limit > .rcpt-intro, html body .limit > .meta{width:var(--frame-w,84vw);max-width:100%}
+html body .opening .opening-inner h1{margin-left:calc((100% - var(--frame-w,84vw)) / 2)}
+html body #digital > .digi-pair{width:var(--frame-w,84vw);max-width:100%;grid-template-columns:min(calc(68svh * 9 / 16), 45%) minmax(0,1fr)}
+@media (max-width:720px){ .print-row{grid-template-columns:1fr} .print-close{width:60%} }
+@media (max-width:720px){ html body #digital > .digi-pair{grid-template-columns:1fr} }
+html body .opening .intro-wrap{align-self:flex-start;margin-left:calc((100% - var(--frame-w,84vw)) / 2)}
+/* multi-paragraph text runs on as one block, filling each line */
+html body .limit > .reflect, html body .limit > .rcpt-intro{display:block}
+html body .limit > .reflect p, html body .limit > .rcpt-intro p{display:inline}
+html body .limit > .reflect p + p::before, html body .limit > .rcpt-intro p + p::before{content:" "}
+/* receipts: read one receipt at a time */
+.read{display:flex;flex-direction:column;gap:16px}
+html body #receipts > .read{margin-top:clamp(56px,8svh,96px)}
+html body .read-label{color:var(--fg);font-weight:600}
+.read-strip{width:min(100%,460px);max-height:min(80svh,820px);align-self:center;margin-top:8px}
+/* receipts: Roc Grotesk experiment */
+html body #receipts > .roc-label{color:var(--fg);font-weight:600;margin-top:clamp(56px,8svh,96px)}
+.roc-grid{display:flex;gap:8px;align-items:flex-start}
+.roc-grid img{display:block;width:0;min-width:0;height:auto}
+html body #receipts > .roc-grid{width:calc(100% + var(--gutter-l) + var(--gutter-r));max-width:none;margin-left:calc(-1 * var(--gutter-l))}
+@media (max-width:720px){ .roc-grid{flex-wrap:wrap} .roc-grid img{flex:0 0 calc(50% - 4px) !important;width:calc(50% - 4px)} }
+html body #receipts > .roc-meta{margin-top:-16px}
+/* everything visible from the start, no fade-in on scroll */
+html.js body .reveal{opacity:1;transform:none;transition:none}
+.frame{position:relative;width:46vw;aspect-ratio:16/9;max-width:100%;background:var(--panel);will-change:width}
+.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.meta{display:flex;flex-wrap:wrap;row-gap:10px;justify-content:space-between;align-items:center;gap:16px;width:46vw;max-width:100%}
+.meta-l{display:flex;flex-direction:column;gap:2px;min-width:0}
+.meta > .t{margin:0;flex-basis:100%;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+.controls{display:flex;gap:8px;flex-shrink:0}
+.btn{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);background:transparent;border:1px solid var(--line);
+  min-height:44px;padding:0 14px;cursor:pointer;transition:border-color .2s}
+.btn:hover{border-color:var(--fg)}
+.btn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.whisper{position:absolute;left:var(--gutter-l);right:var(--gutter-r);top:calc(env(safe-area-inset-top,0px) + 96px);display:flex;justify-content:space-between;gap:16px;pointer-events:none}
+.whisper p{margin:0;font-size:clamp(15px,1.4vw,19px);color:var(--muted);max-width:32ch;line-height:1.45;transition:opacity .4s}
+
+/* 02 the limitation */
+/* same column and type as the video block above */
+.limit{display:flex;flex-direction:column;align-items:center;gap:32px;
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:48px 0}
+.limit.rcpt{padding-bottom:120px}
+.ascii{display:flex;flex-direction:column;gap:16px}
+.a-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(16px,3vw,40px);align-items:start}
+.a-wrap .a-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.a-prev{display:flex;flex-direction:column;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 88px);padding-top:16px}
+.a-prev p{margin:0}
+.a-prev-note{font-size:12px;font-weight:300;color:var(--muted)}
+.a-strip{margin-top:8px;max-height:min(70svh,680px);overflow-y:auto;overscroll-behavior:contain;background:#ffffff;scrollbar-width:thin}
+.a-strip img{display:block;width:100%;height:auto;image-rendering:auto}
+.a-strip:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+@media (max-width:900px){ .a-wrap{grid-template-columns:1fr} .a-prev{position:static;order:-1} .a-strip{max-height:60svh;max-width:300px} }
+.ascii-note{margin:-8px 0 0;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+@media (min-width:900px){ html body .ascii-note{font-size:16px;line-height:1.65} }
+.a-days{display:flex;flex-wrap:wrap;gap:4px 20px}
+.a-day{min-height:44px;padding:0;background:transparent;border:0;color:var(--muted);font-family:var(--small);font-size:13px;font-weight:300;cursor:pointer;font-variant-numeric:tabular-nums;transition:color .2s,text-shadow .2s}
+.a-day:hover,.a-day[aria-pressed="true"]{color:var(--fg);text-shadow:0 0 .5px var(--fg),0 0 .5px var(--fg)}
+.a-day[aria-pressed="true"]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:1px}
+.a-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px clamp(12px,3vw,40px);padding-top:16px}
+.a-grid.printing{animation:afade .6s ease}
+@keyframes afade{from{opacity:0}to{opacity:1}}
+.a-item{margin:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.a-box{aspect-ratio:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.a-art{margin:0;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:4.6px;line-height:1;white-space:pre;color:var(--fg);font-size:6.4px}
+.a-item figcaption{display:flex;flex-direction:column;gap:4px}
+@media (max-width:900px){ .a-grid{grid-template-columns:repeat(2,minmax(0,1fr))} .a-art{font-size:4.2px} }
+@media (max-width:560px){ .a-art{font-size:2.8px} }
+@media (prefers-reduced-motion:reduce){ .a-grid.printing{animation:none} }
+.rcpt-intro{display:flex;flex-direction:column;gap:0}
+.rcpt-intro p{margin:0;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+.rcpt-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:clamp(16px,4vw,48px);align-items:start}
+.rcpt-days{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.r-day{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px;padding:0 4px;background:transparent;border:0;border-bottom:1px solid var(--line);
+  color:var(--muted);font-family:var(--small);font-size:13px;font-weight:300;cursor:pointer;text-align:left;font-variant-numeric:tabular-nums}
+.r-day:hover{color:var(--fg)}
+.r-day[aria-pressed="true"]{color:var(--fg)}
+.r-day[aria-pressed="true"] .r-d::before{content:"● ";font-size:9px;vertical-align:2px}
+.rcpt-stage{position:relative;max-height:min(78svh,760px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.receipt{background:#f3f1ea;color:#111111;font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;line-height:1.5;padding:28px 22px 36px;
+  display:flex;flex-direction:column;gap:14px;transform-origin:top center}
+.receipt:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+.receipt.printing{animation:print .9s cubic-bezier(.2,.7,.2,1)}
+@keyframes print{from{clip-path:inset(0 0 100% 0);transform:translateY(-10px)}to{clip-path:inset(0 0 0 0);transform:none}}
+.r-head{text-align:center;display:flex;flex-direction:column;gap:2px;text-transform:uppercase;letter-spacing:.06em}
+.r-head b{font-size:13px;font-weight:500}
+.r-row{display:flex;justify-content:space-between;gap:12px;text-transform:uppercase}
+.r-rule{border:0;border-top:1px dashed #111111;margin:0;opacity:.6}
+.r-item{display:flex;flex-direction:column;gap:8px}
+.r-art{margin:0;font-family:inherit;font-size:6px;line-height:1;letter-spacing:0;white-space:pre;overflow:hidden;text-align:left;align-self:center}
+.r-label{display:grid;grid-template-columns:3ch 1fr;gap:6px}
+.r-label .s{font-weight:500}
+.r-label .id{grid-column:2;opacity:.6;font-size:10px}
+.r-thanks{text-align:center;letter-spacing:.08em;font-weight:500}
+.r-loading{margin:0;opacity:.6}
+@media (max-width:720px){
+  .rcpt-wrap{grid-template-columns:1fr}
+  .rcpt-days{flex-direction:row;flex-wrap:wrap;gap:6px;border-top:0}
+  .r-day{border:1px solid var(--line);padding:0 12px}
+  .r-day .r-n{display:none}
+  .rcpt-stage{max-height:70svh}
+}
+@media (prefers-reduced-motion:reduce){ .receipt.printing{animation:none} }
+.limit.type{padding-bottom:0}
+.tester{display:flex;flex-direction:column;gap:14px;padding-top:24px}
+.tester > .label:first-child{color:var(--fg);font-weight:600;font-size:13px}
+.t-controls{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.t-field{flex:1 1 260px;min-width:0}
+.t-field input{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;background:transparent;border:1px solid var(--line);color:var(--fg);font-family:var(--small);font-size:15px;font-weight:300}
+.t-field input:focus{border-color:var(--fg);outline:none}
+.t-size{display:flex;align-items:center;gap:10px}
+.t-size input{width:140px;accent-color:#ffffff}
+.t-px{min-width:3ch;color:var(--fg);font-variant-numeric:tabular-nums}
+.t-out{min-height:120px;display:flex;flex-wrap:wrap;align-content:flex-start;overflow:hidden;padding-block:8px}
+.t-word{display:inline-flex;white-space:nowrap}
+.t-g{position:relative;display:inline-block;flex:none}
+.t-g img{position:absolute;max-width:none;pointer-events:none;user-select:none}
+.t-note{margin:0;font-size:12px;font-weight:300;color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.viewer{display:flex;flex-direction:column;gap:12px}
+.v-stage{position:relative;aspect-ratio:2000/1294;background:var(--bg);overflow:hidden;touch-action:pan-y;cursor:pointer}
+.v-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s ease}
+.v-stage img.on{opacity:1}
+.v-bar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.v-count{flex:1;text-align:center;font-variant-numeric:tabular-nums;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.v-title{color:var(--fg)}
+.v-btn{min-width:56px;font-size:16px;border-color:transparent;color:var(--fg)}
+.v-btn:hover{border-color:transparent;color:var(--fg);opacity:.7}
+@media (prefers-reduced-motion:reduce){ .v-stage img{transition:none} }
+.limit > .type-meta{margin-top:-16px}
+.arch-intro{margin:0;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:32px clamp(12px,3vw,40px)}
+.step{display:flex;flex-direction:column;gap:6px;min-width:0}
+.step p{margin:0}
+.shot{position:relative;aspect-ratio:1280/686;background:var(--panel);margin-bottom:6px}
+.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.arch-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.out{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.out:hover{color:var(--fg);opacity:.7}
+@media (max-width:720px){ .steps{grid-template-columns:1fr} }
+.limit > .book-frame{position:relative;aspect-ratio:4/3;width:min(var(--frame-w,84vw), calc((100svh - 220px) * 4 / 3));max-width:100%;background:var(--panel);align-self:center}
+.book-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.limit > .book-meta{width:min(var(--frame-w,84vw), calc((100svh - 220px) * 4 / 3));margin-top:-16px}
+.digi-pair{align-items:end}
+.digi-frame{position:relative;aspect-ratio:9/16;max-width:100%;background:var(--panel)}
+.digi-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.digi-side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.digi-t{margin:0;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+@media (max-width:720px){ .digi-pair{grid-template-columns:1fr} .digi-frame{width:72%;justify-self:start} }
+.limit > *{width:var(--sec-w,var(--frame-w,84vw));max-width:100%}
+/* fit each chapter's media and its text on one screen */
+#limitation{--sec-w:min(var(--frame-w,84vw), calc(54svh * 0.695 * 2 + 40px))}
+#repetition{--sec-w:min(var(--frame-w,84vw), calc(48svh * 2 + 40px))}
+#digital{--sec-w:min(var(--frame-w,84vw), calc(68svh * 9 / 16 * 2 + 48px))}
+#book{--sec-w:min(var(--frame-w,84vw), calc((100svh - 220px) * 4 / 3))}
+#ascii{--sec-w:min(var(--frame-w,84vw), calc((100svh - 240px) * 1.5))}
+.asc-fig{margin:0}
+.print-block{display:flex;flex-direction:column;gap:16px;padding-top:clamp(56px,8svh,96px)}
+html body .print-label{color:var(--fg);font-weight:600}
+.print-row{display:grid;grid-template-columns:1.7778fr 0.5625fr;gap:clamp(8px,1.2vw,16px);width:min(100%, calc((100svh - 240px) * 2.34))}
+.print-frame{position:relative;aspect-ratio:16/9;background:var(--panel);min-width:0}
+.print-close{aspect-ratio:9/16}
+.print-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.print-meta{width:min(100%, calc((100svh - 240px) * 2.34))}
+.print-photo{margin:clamp(32px,5svh,56px) 0 0;display:flex;flex-direction:column;gap:12px;width:min(100%, calc((100svh - 200px) * 4 / 3))}
+.print-photo img{display:block;width:100%;height:auto}
+html body #receipts > .print-photo{width:calc(100% + var(--gutter-l) + var(--gutter-r));max-width:none;margin-left:calc(-1 * var(--gutter-l))}
+html body #receipts > .print-photo figcaption{padding-left:calc(var(--gutter-l) + (100% - var(--gutter-l) - var(--gutter-r) - var(--frame-w,84vw)) / 2)}
+.t-fig{margin:0;display:flex;flex-direction:column;gap:12px}
+.t-fig img{display:block;width:100%;height:auto}
+.t-fig figcaption,.t-pair figcaption{display:flex;flex-direction:column;gap:4px}
+.t-pair .work img{aspect-ratio:auto;object-fit:contain}
+html body #typeface > .t-pair{grid-template-columns:1fr;row-gap:48px;width:calc(100% + var(--gutter-l) + var(--gutter-r));max-width:none;margin-left:calc(-1 * var(--gutter-l))}
+html body #typeface > .t-pair figcaption{padding-left:calc(var(--gutter-l) + (100% - var(--gutter-l) - var(--gutter-r) - var(--frame-w,84vw)) / 2)}
+/* macro: same size as the book video, on the shared left line */
+.macro-row{display:block}
+.macro-row img{display:block;width:100%;height:auto}
+html body #typeface > .t-pair > .work:first-child{width:var(--frame-w,84vw);max-width:100%;margin-left:calc(var(--gutter-l) + (100% - var(--gutter-l) - var(--gutter-r) - var(--frame-w,84vw)) / 2)}
+html body #typeface > .t-pair > .work:first-child figcaption{padding-left:0}
+/* principle: full chapter width */
+html body #typeface > .t-fig{width:var(--frame-w,84vw);max-width:100%}
+html body #typeface > .t-fig + .t-fig{margin-top:24px}
+html body #typeface > .spec-label{color:var(--fg);font-weight:600;margin-top:24px;margin-bottom:-16px}
+html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r));max-width:none;margin-left:calc(-1 * var(--gutter-l))}
+.asc-fig img{display:block;width:100%;height:auto}
+.limit > .asc-meta{margin-top:-16px}
+#archive{--sec-w:min(var(--frame-w,84vw), calc((100svh - 320px) / 2 / 0.536 * 2 + 40px))}
+#specimen{--sec-w:min(var(--frame-w,84vw), calc((100svh - 240px) * 1.545))}
+#typeface{--sec-w:min(var(--frame-w,84vw), calc((100svh - 240px) * 1.545))}
+.limit-head{display:flex;flex-direction:column;gap:12px}
+.limit h2{margin:0;font-family:var(--soft);font-weight:300;font-variation-settings:"SOFT" 100;font-size:clamp(26px,3.4vw,48px);line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,3vw,40px);align-items:start}
+.work{margin:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.work img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:0.695;object-fit:cover;object-position:center}
+.work figcaption{display:flex;flex-direction:column;gap:4px}
+.cap-t{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg)}
+.cap-s{font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+.cap-d{display:none}
+.reflect{display:flex;flex-direction:column;gap:0;margin-top:-16px}
+.reflect p{margin:0;font-size:13px;font-weight:300;line-height:1.6;color:var(--fg)}
+
+/* 03 repetition */
+.rep .work img{aspect-ratio:1}
+.count{margin:-12px 0 0;font-size:13px;font-weight:300;line-height:1.6;color:var(--muted)}
+
+/* reveal on scroll: visible by default, hidden only once script is running */
+.js .reveal{opacity:0;transform:translateY(12px);transition:opacity 1.1s ease,transform 1.1s ease;transition-delay:var(--d,0s)}
+.js .reveal.in{opacity:1;transform:none}
+
+@media (max-width:720px){
+}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{opacity:1;transform:none;transition:none}
+}
+
+/* end of built chapters */
+.next{display:flex;flex-direction:column;align-items:center;gap:16px;
+  padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:72px 24px}
+.next > *{width:var(--frame-w,84vw);max-width:100%}
+.next p.big{margin:0;font-size:clamp(24px,3.2vw,44px);letter-spacing:-.015em;line-height:1.15;color:var(--muted);max-width:24ch;text-wrap:balance}
+
+@media (max-width:720px){
+  .index{display:none}
+  .frame,.meta{width:84vw}
+  .meta{flex-direction:column;align-items:flex-start}
+  .whisper{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  .cue-line::after{animation:none;top:0;height:100%}
+  .stage{height:auto}
+  .sticky{position:relative;height:auto;padding-block:96px}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <p class="label" style="color:var(--fg)">Somin Park</p>
+  <nav aria-label="Chapters">
+    <ol class="index">
+      <li><a href="#opening" data-sec="opening" aria-current="true">01 Sketching</a></li>
+      <li><a href="#limitation" data-sec="limitation">02 The Limitation</a></li>
+      <li><a href="#repetition" data-sec="repetition">03 Repetition</a></li>
+      <li><a href="#digital" data-sec="digital">04 Digital</a></li>
+      <li><a href="#book" data-sec="book">05 Book</a></li>
+      <li><a href="#archive" data-sec="archive">06 Archive</a></li>
+      <li><a href="#typeface" data-sec="typeface">07 Typeface</a></li>
+      <li><a href="#specimen" data-sec="specimen">08 Specimen</a></li>
+      <li><a href="#ascii" data-sec="ascii">09 ASCII</a></li>
+      <li><a href="#receipts" data-sec="receipts">10 Receipts</a></li>
+    </ol>
+  </nav>
+</header>
+
+<main>
+  <section class="opening" id="opening" aria-label="Chapter 00, Opening">
+    <div class="opening-inner">
+      <h1>Unnamed Feelings<span class="sub">Living Archive</span></h1>
+      <div class="intro-wrap">
+        <p class="intro">Not every feeling has a name.</p>
+        <p class="intro">A single feeling is rarely just one thing. It often holds several emotions tangled together, too complex to be defined by one word, one image, or one symbol. I believe there is beauty hidden in the smallest emotions we often overlook. Through drawing, collecting, and experimenting, I explore these feelings, hoping to encourage others to look more closely at their own emotional experiences.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stage" id="sketchbook" aria-label="Sketchbook flip-through video">
+    <div class="sticky">
+      <p class="label sec-no" id="secno">01 / Sketching</p>
+      <div class="frame" id="frame">
+        <video id="vid" src="media/sketch.mp4" poster="media/sketch-poster.jpg" muted loop playsinline preload="metadata"
+          aria-label="Top-down video of hands turning the pages of a sketchbook. Each page holds one small hand-drawn circular form in color pencil."></video>
+      </div>
+      <div class="meta" id="meta">
+        <div class="meta-l">
+          <p class="label">Sketchbook · 01:29</p>
+        </div>
+        <div class="controls">
+          <button class="btn" id="play" type="button" aria-pressed="false">Pause</button>
+          <button class="btn" id="sound" type="button" aria-pressed="false">Sound off</button>
+        </div>
+        <p class="t">I began drawing to explore emotions that words could not fully describe. Rather than defining what I felt, I allowed colors, textures, and abstract forms to emerge intuitively.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="limit" id="limitation" aria-label="02, The Limitation">
+    <div class="limit-head">
+      <p class="label reveal">02 / The Limitation</p>
+    </div>
+
+    <div class="pair">
+      <figure class="work work-l">
+        <img class="reveal" style="--d:.1s" src="media/anxiety-2026-08-29.webp" width="1030" height="1526" loading="lazy"
+          alt="Colored pencil drawing on white paper: a blurred oval of deep pink and red with a black core, above a soft pale grey circle. Handwritten date 8.29.2026 and the Korean word for anxiety.">
+        <figcaption class="reveal" style="--d:.5s">
+          <span class="cap-t">Anxiety</span>
+          <span class="cap-s">A predefined emotion</span>
+          <span class="cap-d">8.29.2026</span>
+        </figcaption>
+      </figure>
+      <figure class="work work-r">
+        <img class="reveal" style="--d:.3s" src="media/sunlight-2026-09-03.webp" width="1054" height="1492" loading="lazy"
+          alt="Watercolor drawing on white paper: a rounded green and blue form with a yellow and ochre center, small red drops at its lower right, and a faint grey trail below. Handwritten date 9.3.2026 and a Korean sentence: sunlight comes in through the window.">
+        <figcaption class="reveal" style="--d:.6s">
+          <span class="cap-t">Sunlight came through the window.</span>
+          <span class="cap-s">An observed moment</span>
+          <span class="cap-d">9.3.2026</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="reflect reveal">
+      <p>At first, I tried to express emotions by assigning each drawing a specific label. However, I realized that naming a feeling before drawing it limited my interpretation.</p>
+      <p>Instead of defining what I felt, I began recording the moments that made me feel something.</p>
+    </div>
+  </section>
+
+
+  <section class="limit rep" id="repetition" aria-label="03, Repetition and Difference">
+    <div class="limit-head">
+      <p class="label reveal">03 / Repetition &amp; Difference</p>
+    </div>
+
+    <div class="pair">
+      <figure class="work">
+        <img class="reveal" style="--d:.1s" src="media/rep/UF-20260906-008.webp" width="566" height="566" loading="lazy"
+          alt="Graphite pencil drawing: sparse, short broken black marks scattered around a dark center.">
+        <figcaption class="reveal" style="--d:.5s">
+          <span class="cap-t">A Slight Sense of Discomfort</span>
+          <span class="cap-s">9.6.2026</span>
+        </figcaption>
+      </figure>
+      <figure class="work">
+        <img class="reveal" style="--d:.3s" src="media/rep/UF-20260908-025.webp" width="888" height="888" loading="lazy"
+          alt="Marker and colored pencil drawing: dense nested rings in blue-violet, teal, crimson, yellow, and green.">
+        <figcaption class="reveal" style="--d:.6s">
+          <span class="cap-t">A Slight Sense of Discomfort</span>
+          <span class="cap-s">9.8.2026</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="reflect reveal">
+      <p>As I collected more drawings, I noticed that certain words and sentences appeared repeatedly, yet the images associated with them were completely different.</p>
+      <p>I realized that even when we use the same words to describe our feelings, each experience is shaped by a different moment, environment, and state of mind.</p>
+      <p>The words may repeat, but the feelings never exist in exactly the same way.</p>
+    </div>
+  </section>
+
+  <section class="limit digi" id="digital" aria-label="04, Digital Reinterpretation">
+    <div class="limit-head">
+      <p class="label reveal">04 / Digital Reinterpretation</p>
+    </div>
+    <div class="pair digi-pair">
+      <div class="digi-frame reveal" style="--d:.1s">
+        <video id="dvid" src="media/digital.mp4" poster="media/digital-poster.jpg" muted loop playsinline preload="metadata"
+          aria-label="Vertical video cycling through digital reinterpretations of the hand-drawn forms: soft gradients, flat shapes, and layered textures in many colors."></video>
+      </div>
+      <div class="digi-side reveal" style="--d:.3s">
+        <p class="label">Digital · 00:18</p>
+        <div class="controls">
+          <button class="btn" id="dplay" type="button" aria-pressed="false">Pause</button>
+          <button class="btn" id="dsound" type="button" aria-pressed="false">Sound off</button>
+        </div>
+        <p class="digi-t">I reinterpreted each hand-drawn sketch digitally, not to improve it, but to explore how the same emotional moment could take another form through color, transparency, layering, and texture.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="limit book" id="book" aria-label="05, The Book">
+    <div class="limit-head">
+      <p class="label reveal">05 / The Book</p>
+    </div>
+    <div class="book-frame reveal" style="--d:.1s">
+      <video id="bvid" src="media/book.mp4" poster="media/book-poster.jpg" muted loop playsinline preload="metadata"
+        aria-label="Top-down video of a spiral-bound book being paged through. Each spread pairs a hand-drawn form on the left page with its digital reinterpretation on the right. The final spread lists page numbers, sentences, and dates."></video>
+    </div>
+    <div class="meta book-meta reveal" style="--d:.2s">
+      <p class="label">Book · 256 images</p>
+      <div class="controls">
+        <button class="btn" id="bplay" type="button" aria-pressed="false">Pause</button>
+      </div>
+      <p class="t">I brought the original sketches and their digital reinterpretations together in a book, placing the hand-drawn version on the left and its digital counterpart on the right. The final pages serve as an index, documenting each drawing’s original sentence, date, and page number.</p>
+    </div>
+  </section>
+
+  <section class="limit arch" id="archive" aria-label="06, The Anatomy of Unnamed Feelings">
+    <div class="limit-head">
+      <p class="label reveal"><a class="sec-link" href="https://parks040.github.io/unnamed-feelings/" target="_blank" rel="noopener">06 / The Anatomy of Unnamed Feelings &#x2197;&#xFE0E;</a></p>
+    </div>
+    <p class="arch-intro reveal">I built a digital archive, The Anatomy of Unnamed Feelings, to turn the book’s index into something searchable. Each drawing is recorded with its original sentence, date, and visual qualities, so it can be compared with others that share the same sentence or word.</p>
+    <ol class="steps">
+      <li class="step reveal" style="--d:.05s">
+        <div class="shot"><video class="avid" src="media/arch-1-grid.mp4" poster="media/arch-1-grid.jpg" muted loop playsinline preload="metadata" aria-label="Screen recording: scrolling through the archive grid, drawings grouped under each date."></video></div>
+        <p class="cap-t">1 · Browse</p>
+        <p class="cap-s">130 records, organized by date.</p>
+      </li>
+      <li class="step reveal" style="--d:.15s">
+        <div class="shot"><video class="avid" src="media/arch-2-record.mp4" poster="media/arch-2-record.jpg" muted loop playsinline preload="metadata" aria-label="Screen recording: opening the record Sense of Loss and scrolling its detail page of numbered fields."></video></div>
+        <p class="cap-t">2 · Record</p>
+        <p class="cap-s">Each drawing documented across 20 fields, from its sentence to its color and form.</p>
+      </li>
+      <li class="step reveal" style="--d:.05s">
+        <div class="shot"><video class="avid" src="media/arch-3-repeated.mp4" poster="media/arch-3-repeated.jpg" muted loop playsinline preload="metadata" aria-label="Screen recording: the Repeated view, grouping drawings under the same sentence and under shared words."></video></div>
+        <p class="cap-t">3 · Repeated</p>
+        <p class="cap-s">Records grouped by shared sentences and words.</p>
+      </li>
+      <li class="step reveal" style="--d:.15s">
+        <div class="shot"><video class="avid" src="media/arch-4-index.mp4" poster="media/arch-4-index.jpg" muted loop playsinline preload="metadata" aria-label="Screen recording: the List view, each row showing a thumbnail, sentence, sentence ID, date, and occurrence."></video></div>
+        <p class="cap-t">4 · Index</p>
+        <p class="cap-s">The same records as a list, with sentence, date, and occurrence.</p>
+      </li>
+    </ol>
+    <div class="arch-foot reveal">
+      <button class="btn" id="aplay" type="button" aria-pressed="false">Pause</button>
+    </div>
+  </section>
+
+  <section class="limit type" id="typeface" aria-label="07, The Typeface">
+    <div class="limit-head">
+      <p class="label reveal">07 / The Typeface</p>
+    </div>
+    <figure class="t-fig">
+      <img src="media/type-principle.webp" width="2000" height="1294" loading="lazy"
+        alt="How the letter A is built: a gray textured oval with loose loops, plus two pale lace-like masses joined by three blue ovals, plus two gray striped forms, equals the letter A.">
+      <figcaption><span class="cap-t">Principle</span><span class="cap-s">Drawn forms combine into a letter.</span></figcaption>
+    </figure>
+    <figure class="t-fig">
+      <img src="media/typeface-charset.webp" width="2800" height="1527" loading="lazy"
+        alt="The full character set on black: uppercase A to Z, lowercase a to z, numerals 0 to 9, and punctuation, each built from the same small colored drawn forms.">
+      <figcaption><span class="cap-t">Character Set</span><span class="cap-s">Uppercase, lowercase, numbers, and punctuation, all built from the same drawn forms.</span></figcaption>
+    </figure>
+    <div class="pair t-pair">
+      <figure class="work">
+        <div class="macro-row">
+          <img src="media/type-macro.webp" width="2000" height="1294" loading="lazy"
+            alt="Macro: the letter M at very large scale, built from blue, red and yellow, watercolor, orange, dark blue, and gray textured forms.">
+        </div>
+        <figcaption><span class="cap-t">Macro</span><span class="cap-s">Up close, each letter is a set of drawings.</span></figcaption>
+      </figure>
+      <figure class="work">
+        <img src="media/type-micro.webp" width="2400" height="1529" loading="lazy"
+          alt="Micro: long passages set small in the typeface, forming a dense texture of tiny colored letters across two pages, with a large letter shape left open in the text.">
+        <figcaption><span class="cap-t">Micro</span><span class="cap-s">At text size, the letters become texture.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="limit type spec" id="specimen" aria-label="08, Type Specimen">
+    <div class="limit-head">
+      <p class="label reveal">08 / Type Specimen</p>
+    </div>
+    <div class="meta type-meta">
+      <p class="label">Unnamed Feelings · Glyphs 4</p>
+      <p class="t">Using Glyphs 4, I turned my drawings into a typeface. The project began because words could not hold what I felt. Here, the drawings themselves became letters.</p>
+    </div>
+    <div class="viewer reveal" style="--d:.1s" role="region" aria-roledescription="carousel" aria-label="Type specimen spreads">
+      <div class="v-stage" id="vstage" tabindex="0" aria-live="polite">
+        <img class="on" src="media/spec/01-cover.webp" data-t="Cover" alt="Specimen cover: the words Unnamed Feelings set large in the typeface, each letter built from colored drawn forms, stepping down the page.">
+        <img data-src="media/spec/02-intro.webp" data-t="02–03 · Introduction" alt="Spread 02 to 03: introduction text on the left, a large letter X built from drawn forms on the right.">
+        <img data-src="media/spec/03-feeling-to-form.webp" data-t="04–05 · Feeling to Form" alt="Spread 04 to 05: ten selected drawn forms on the left, a photo of an original watercolor record dated 9.2.2026 on the right.">
+        <img data-src="media/spec/04-letterforms.webp" data-t="08–09 · Letterform Variations" alt="Spread 08 to 09: the lowercase alphabet, then numbers and punctuation.">
+        <img data-src="media/spec/05-macro-a.webp" data-t="10–11 · Macro Typography" alt="Spread 10 to 11: the letter A at very large scale, its strokes made of a textured oval, three blue ovals, and gray drawn masses.">
+        <img data-src="media/spec/05b-macro-c.webp" data-t="10–11 · Macro Typography" alt="Spread: the letter C at very large scale, built from a textured blue mass, small orange and ringed forms, a blue oval, a red and yellow form, and a watercolor shape.">
+        <img data-src="media/spec/06-macro-m.webp" data-t="12–13 · Macro Typography" alt="Spread 12 to 13: the letter M at very large scale, built from blue, red and yellow, watercolor, and textured forms.">
+        <img data-src="media/spec/07-micro.webp" data-t="14–15 · Micro Typography" alt="Spread 14 to 15: long passages set small in the typeface, reading as texture across the page.">
+        <img data-src="media/spec/07b-micro-16.webp" data-t="16–17 · Micro Typography" alt="Spread 16 to 17: dense text set small in the typeface, filling both pages as texture.">
+        <img data-src="media/spec/07c-micro-18.webp" data-t="18–19 · Micro Typography" alt="Spread 18 to 19: a single thin band of small text running across an otherwise black spread.">
+        <img data-src="media/spec/08-type-scale.webp" data-t="20–21 · Type Scale" alt="Spread 20 to 21: the sentence Sunlight came through the window set from 8 to 56 point.">
+        <img data-src="media/spec/08b-type-scale-22.webp" data-t="22–23 · Type Scale" alt="Spread 22 to 23: the sentence Sunlight came through the window set at 60, 70, and 100 point.">
+        <img data-src="media/spec/09-information.webp" data-t="Typeface Information" alt="Colophon: designed by Somin Park, 2026. Typeface Unnamed Feelings, style Regular, type design in Glyphs 4, specimen design in Adobe InDesign.">
+      </div>
+      <div class="v-bar">
+        <button class="btn v-btn" id="vprev" type="button" aria-label="Previous spread">←</button>
+        <p class="label v-count"><span id="vnum">01 / 13</span> <span id="vtitle" class="v-title">Cover</span></p>
+        <button class="btn v-btn" id="vnext" type="button" aria-label="Next spread">→</button>
+      </div>
+    </div>
+
+    <div class="tester reveal" style="--d:.1s">
+      <p class="label">Type Tester</p>
+      <div class="t-controls">
+        <label class="t-field" for="ttext"><span class="sr">Text to set</span>
+          <input id="ttext" type="text" value="Sunlight came through the window" maxlength="120" autocomplete="off" spellcheck="false">
+        </label>
+        <label class="t-size" for="tsize"><span class="label">Size</span>
+          <input id="tsize" type="range" min="24" max="200" step="2" value="72">
+          <span class="label t-px" id="tpx">72</span>
+        </label>
+      </div>
+      <div class="t-out" id="tout" role="img" aria-label="Sunlight came through the window, set in Unnamed Feelings"></div>
+    </div>
+  </section>
+
+  <section class="limit asc" id="ascii" aria-label="09, ASCII">
+    <div class="limit-head">
+      <p class="label reveal">09 / ASCII</p>
+    </div>
+    <div class="meta asc-meta">
+      <p class="label">Drawings in characters</p>
+      <p class="t">I translated my hand-drawn sketches into ASCII, rebuilding each form from typed characters. I wanted to see what would remain of each feeling once its color and texture were removed and only characters were left.</p>
+    </div>
+    <figure class="asc-fig asc-full">
+      <img src="media/ascii-all.webp" width="4000" height="2667" loading="lazy"
+        alt="The drawings converted into ASCII, arranged in a grid of thirteen columns on black. Each form is built from small gray characters: ovals, rings, spirals, tangles, and scattered marks.">
+    </figure>
+    <figure class="asc-fig">
+      <img src="media/ascii-detail.webp" width="2000" height="1333" loading="lazy"
+        alt="Close-up of one drawing in ASCII: a rounded, slightly irregular form made of white characters such as dashes, colons, equals signs, plus signs, asterisks, and hash marks, denser toward the center.">
+    </figure>
+  </section>
+
+  <section class="limit rcpt" id="receipts" aria-label="10, Emotional Receipts">
+    <div class="limit-head">
+      <p class="label reveal">10 / Emotional Receipts</p>
+    </div>
+    <div class="rcpt-intro reveal">
+      <p>Receipts record what I buy, then are often thrown away. I wanted to use them to document what I feel instead, creating one receipt for each day.</p>
+      <p>By placing my personal emotions within a standardized format, I highlight the contrast between what can be measured and what cannot. There are no prices, because feelings cannot be bought or exchanged.</p>
+    </div>
+    <div class="print-block">
+      <p class="label print-label">Printing</p>
+      <div class="print-row">
+        <div class="print-frame">
+          <video id="pvid" src="media/printing.mp4" poster="media/printing-poster.jpg" muted loop playsinline preload="metadata"
+            aria-label="A thermal receipt printer next to a laptop prints a receipt. A hand pulls the long strip of paper out of the printer and lays it on the table."></video>
+        </div>
+        <div class="print-frame print-close">
+          <video id="pvid2" src="media/printing-closeup.mp4" poster="media/printing-closeup.jpg" muted loop playsinline preload="metadata"
+            aria-label="Close-up from above: a receipt feeds out of the printer, showing small gray ASCII drawings with sentences printed under them, such as A Little Hungry, Let Me Feel at Ease, and A Pocket Full of Thoughts."></video>
+        </div>
+      </div>
+      <div class="meta print-meta">
+        <p class="label">Receipt · Printing &amp; close-up</p>
+        <div class="controls">
+          <button class="btn" id="pplay" type="button" aria-pressed="false">Pause</button>
+          <button class="btn" id="psound" type="button" aria-pressed="false">Sound off</button>
+        </div>
+        <p class="t">On a thermal receipt printer, a day’s drawings and sentences come out as one continuous strip of paper, a record that can be held and kept.</p>
+      </div>
+    </div>
+    <figure class="print-photo">
+        <img src="media/receipts-printed.webp" width="2400" height="1130" loading="lazy"
+          alt="Long strips of printed thermal receipts curling and overlapping on a black surface. Each strip shows small gray ASCII drawings, each with its sentence printed beside it, such as Anxiety, Sense of Loss, Sunlight, and I Can Do It.">
+        <figcaption><span class="cap-t">Printed receipts</span></figcaption>
+      </figure>
+    <div class="read">
+      <p class="label read-label">Read the receipts</p>
+      <div class="a-days" role="group" aria-label="Choose a day" id="rdays"></div>
+      <div class="a-strip read-strip" tabindex="0" aria-label="Receipt print preview, scrollable">
+        <img id="aprev" src="media/preview/0829.png" width="576" height="1939" alt="Print preview of the receipt for 08.29.2026: the date at the top, then each ASCII drawing with its sentence below.">
+      </div>
+    </div>
+    <p class="label roc-label">Experiment · Roc Grotesk</p>
+    <div class="roc-grid">
+      <img src="media/roc-1.webp" width="987" height="958" loading="lazy" style="flex:1.030 1 0"
+        alt="The receipt folded into a looping knot, showing large type like Tap, Tap, Memory, Happy, Listening, and Pupil next to rows of small sentences.">
+      <img src="media/roc-2.webp" width="1037" height="882" loading="lazy" style="flex:1.176 1 0"
+        alt="A close-up of the start of the receipt curling toward the viewer: Discomfort, then Reminiscence + Romance, Curiosity + Boldness = What Is This Feeling? Following My Instincts, in widening, lighter type.">
+      <img src="media/roc-3.webp" width="685" height="1361" loading="lazy" style="flex:0.503 1 0"
+        alt="The receipt curving into a loose S shape, with sentences like Tap, Tap, Memory, I'm So Happy, Remembered!, and It'll Get Better, Right? changing in weight and width.">
+      <img src="media/roc-4.webp" width="627" height="1533" loading="lazy" style="flex:0.409 1 0"
+        alt="The receipt hanging in a long twisting strip, with lines like Woody Scent, Oud Wood, Putting My Thoughts on Pause, and Oh, I'm So Happy.">
+    </div>
+    <div class="meta roc-meta">
+      <p class="t">I also explored how a thermal print could carry complex emotions through type alone. Using the variations of Roc Grotesk, I set the sentences from the two weeks of sketches in their original order, shifting weight and width to mirror the feelings I encountered during that time.</p>
+    </div>
+  </section>
+
+  <section hidden>
+    <script type="application/json" id="gdata">{"A":[2,-103,855,793],"B":[3,-256,828,479],"C":[4,-128,828,679],"D":[5,-231,828,552],"E":[6,-209,834,582],"F":[7,-206,829,577],"G":[8,-170,830,660],"H":[9,-181,822,618],"I":[10,-28,840,877],"J":[11,-103,831,710],"K":[12,-248,834,535],"L":[13,-148,830,724],"M":[14,-109,822,788],"N":[15,-245,837,521],"O":[16,-192,824,604],"P":[17,-287,828,446],"Q":[18,-156,845,638],"R":[19,-239,838,554],"S":[20,-256,834,443],"T":[21,-167,840,621],"U":[22,-151,842,652],"V":[23,-37,815,816],"W":[24,-87,835,799],"X":[25,-176,832,621],"Y":[26,-184,825,543],"Z":[27,-217,833,557],"a":[28,-217,747,532],"b":[29,-281,761,463],"c":[30,-262,735,446],"d":[31,-237,758,463],"e":[32,-289,758,446],"f":[33,-198,744,566],"g":[34,-242,618,477],"h":[35,-259,794,463],"i":[36,-376,766,213],"j":[37,-234,754,393],"k":[38,-317,761,391],"l":[39,-384,762,213],"m":[40,-126,785,721],"n":[41,-264,794,463],"o":[42,-278,774,441],"p":[43,-281,723,466],"q":[44,-214,717,466],"r":[45,-281,779,435],"s":[46,-342,782,327],"t":[47,-231,760,491],"u":[48,-253,782,463],"v":[49,-317,774,382],"w":[50,-198,788,593],"x":[51,-353,778,299],"y":[52,-267,689,449],"z":[53,-278,773,407],"0":[54,-206,824,543],"1":[55,-198,855,554],"2":[56,-289,846,435],"3":[57,-273,842,449],"4":[58,-223,830,518],"5":[59,-278,831,438],"6":[60,-212,856,543],"7":[61,-262,840,402],"8":[62,-295,837,399],"9":[63,-220,825,532],".":[64,-120,875,179],",":[65,-145,806,171],":":[66,-403,766,185],";":[67,-398,766,179],"!":[68,-389,800,216],"?":[69,-362,800,352],"-":[70,-264,873,446],"(":[71,-134,800,410],")":[72,-445,800,413],"\u201c":[73,-387,750,249],"\u201d":[74,-370,700,252],"\u2018":[75,-412,1000,171],"\u2019":[76,-417,740,185],"\"":[77,-406,750,218],"'":[78,-406,750,152]," ":[null,0,0,320],"\u00a0":[null,0,0,320]}</script>
+
+  </section>
+</main>
+
+<script>
+(function(){
+  var vid=document.getElementById('vid');
+  var frame=document.getElementById('frame');
+  var meta=document.getElementById('meta');
+  var secno=document.getElementById('secno');
+  var stage=document.getElementById('sketchbook');
+  var playBtn=document.getElementById('play');
+  var soundBtn=document.getElementById('sound');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function setPlayLabel(){
+    var playing=!vid.paused;
+    playBtn.textContent=playing?'Pause':'Play';
+    playBtn.setAttribute('aria-pressed', playing?'false':'true');
+  }
+  function tryPlay(){ var p=vid.play(); if(p&&p.catch){p.catch(function(){setPlayLabel();});} }
+
+  playBtn.addEventListener('click',function(){ if(vid.paused){tryPlay();}else{vid.pause();} });
+  soundBtn.addEventListener('click',function(){
+    vid.muted=!vid.muted;
+    soundBtn.textContent=vid.muted?'Sound off':'Sound on';
+    soundBtn.setAttribute('aria-pressed', vid.muted?'false':'true');
+    if(!vid.muted&&vid.paused){tryPlay();}
+  });
+  vid.addEventListener('play',setPlayLabel);
+  vid.addEventListener('pause',setPlayLabel);
+
+  // play only while the stage is on screen
+  if(!reduce.matches && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){tryPlay();} else {vid.pause();} });
+    },{threshold:0.15}).observe(frame);
+  }
+  setPlayLabel();
+
+  // grow the frame as the visitor scrolls through the stage
+  var ticking=false;
+  function layout(){
+    ticking=false;
+    var vw=document.documentElement.clientWidth;
+    var vh=window.innerHeight;
+    var narrow=vw<=720;
+    var gutter=narrow?32:96;
+    var endW=Math.min(vw-gutter,(vh-(narrow?260:200))*16/9);
+    var startW=Math.min(endW,vw*(narrow?0.84:0.46));
+    var w=endW;
+    if(!reduce.matches){
+      var r=stage.getBoundingClientRect();
+      var p=Math.min(1,Math.max(0,(vh*0.85-r.top)/(vh*0.7)));
+      var e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+      w=startW+(endW-startW)*e;
+    }
+    document.documentElement.style.setProperty('--frame-w', endW+'px');
+    frame.style.width=w+'px';
+    meta.style.width=w+'px';
+    secno.style.width=endW+'px';
+  }
+  function onScroll(){ if(!ticking){ticking=true;requestAnimationFrame(layout);} }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll);
+  if(reduce.addEventListener){reduce.addEventListener('change',layout);}
+  layout();
+
+  // gentle reveals
+  if('IntersectionObserver' in window && !reduce.matches){
+    document.documentElement.classList.add('js');
+    var ro=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ro.unobserve(e.target); } });
+    },{threshold:0.2,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+  }
+
+  // chapter index follows the reader
+  var links=document.querySelectorAll('.index a[data-sec]');
+  var secs=[document.getElementById('opening'),document.getElementById('limitation'),document.getElementById('repetition'),document.getElementById('digital'),document.getElementById('book'),document.getElementById('archive'),document.getElementById('typeface'),document.getElementById('specimen'),document.getElementById('ascii'),document.getElementById('receipts')];
+
+  // read the receipts: one print preview per day
+  (function(){
+    var days=document.getElementById('rdays'), pv=document.getElementById('aprev'); if(!days||!pv) return;
+    var D=[["08.29.2026", "Saturday", 4], ["08.31.2026", "Monday", 5], ["09.02.2026", "Wednesday", 2], ["09.03.2026", "Thursday", 7], ["09.06.2026", "Sunday", 13], ["09.07.2026", "Monday", 5], ["09.08.2026", "Tuesday", 28], ["09.09.2026", "Wednesday", 31], ["09.10.2026", "Thursday", 7], ["09.11.2026", "Friday", 15], ["09.12.2026", "Saturday", 8], ["09.14.2026", "Monday", 5]];
+    function show(k){
+      [].forEach.call(days.children,function(b,j){ b.setAttribute('aria-pressed', j===k?'true':'false'); });
+      var d=D[k], key=d[0].slice(0,2)+d[0].slice(3,5);
+      pv.removeAttribute('width'); pv.removeAttribute('height');
+      pv.src='media/preview/'+key+'.png';
+      pv.alt='Print preview of the receipt for '+d[0]+': the date at the top, then each ASCII drawing with its sentence below.';
+      pv.parentNode.scrollTop=0;
+    }
+    D.forEach(function(d,k){
+      var b=document.createElement('button'); b.className='a-day'; b.type='button';
+      b.textContent=d[0].slice(0,5)+' \u00b7 '+d[2];
+      b.setAttribute('aria-label',d[1]+' '+d[0]+', '+d[2]+' drawings');
+      b.addEventListener('click',function(){ show(k); });
+      days.appendChild(b);
+    });
+    show(0);
+  })();
+
+  // type tester: draws each letter from the font's own glyph images, so it works in every browser
+  (function(){
+    var el=document.getElementById('gdata'); if(!el) return;
+    var G=JSON.parse(el.textContent), out=document.getElementById('tout'), inp=document.getElementById('ttext'), rng=document.getElementById('tsize'), px=document.getElementById('tpx');
+    var MAP={'’':"'", '‘':"'", '“':'"', '”':'"'};
+    function glyph(ch,s){
+      var g=G[ch]||G[MAP[ch]]||G[ch.toUpperCase()]||G[ch.toLowerCase()];
+      var box=document.createElement('span'); box.className='t-g';
+      var adv=g?g[3]:600; box.style.width=(adv*s)+'px'; box.style.height=(1.2*1000*s)+'px';
+      if(g && g[0]!==null){
+        var im=document.createElement('img'); im.src='media/glyphs/g'+g[0]+'.webp'; im.alt='';
+        im.style.width=im.style.height=(1000*s)+'px';
+        im.style.left=(g[1]*s)+'px'; im.style.top=((1000-g[2])*s)+'px';
+        box.appendChild(im);
+      }
+      return box;
+    }
+    function render(){
+      var size=+rng.value, s=size/1000, txt=inp.value||' ';
+      px.textContent=size; out.textContent='';
+      out.setAttribute('aria-label', (inp.value||'Empty')+', set in Unnamed Feelings');
+      txt.split(/(\s+)/).forEach(function(part){
+        if(!part) return;
+        var w=document.createElement('span'); w.className='t-word';
+        for(var k=0;k<part.length;k++){ w.appendChild(glyph(part[k]===' '||/\s/.test(part[k])?' ':part[k], s)); }
+        out.appendChild(w);
+      });
+    }
+    inp.addEventListener('input',render); rng.addEventListener('input',render);
+    render();
+  })();
+
+  // specimen spread viewer
+  (function(){
+    var st=document.getElementById('vstage'); if(!st) return;
+    var imgs=[].slice.call(st.querySelectorAll('img')), n=imgs.length, i=0;
+    var num=document.getElementById('vnum'), title=document.getElementById('vtitle');
+    function pad(x){ return (x<10?'0':'')+x; }
+    function load(k){ var im=imgs[(k+n)%n]; if(im.dataset.src){ im.src=im.dataset.src; im.removeAttribute('data-src'); } }
+    function show(k){
+      i=(k+n)%n;
+      imgs.forEach(function(im,j){ im.classList.toggle('on', j===i); im.setAttribute('aria-hidden', j===i?'false':'true'); });
+      load(i); load(i+1); load(i-1);
+      num.textContent=pad(i+1)+' / '+pad(n); title.textContent=imgs[i].dataset.t;
+    }
+    document.getElementById('vprev').addEventListener('click',function(){ show(i-1); });
+    document.getElementById('vnext').addEventListener('click',function(){ show(i+1); });
+    st.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'){ show(i+1); e.preventDefault(); } else if(e.key==='ArrowLeft'){ show(i-1); e.preventDefault(); } });
+    st.addEventListener('click',function(e){ var r=st.getBoundingClientRect(); show(e.clientX-r.left < r.width/2 ? i-1 : i+1); });
+    var x0=null;
+    st.addEventListener('pointerdown',function(e){ if(e.pointerType!=='mouse'){ x0=e.clientX; } });
+    st.addEventListener('pointerup',function(e){ if(x0!==null){ var dx=e.clientX-x0; x0=null; if(Math.abs(dx)>40){ show(dx<0?i+1:i-1); e.preventDefault(); } } });
+    show(0);
+  })();
+
+  // archive step clips: each plays while on screen; one button pauses all
+  (function(){
+    var vs=[].slice.call(document.querySelectorAll('.avid')), pb=document.getElementById('aplay'), held=reduce.matches;
+    function lab(){ pb.textContent=held?'Play':'Pause'; pb.setAttribute('aria-pressed', held?'true':'false'); }
+    function go(v){ var p=v.play(); if(p&&p.catch){p.catch(function(){});} }
+    var seen=new Map();
+    pb.addEventListener('click',function(){ held=!held; vs.forEach(function(v){ if(held){v.pause();} else if(seen.get(v)){go(v);} }); lab(); });
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ es.forEach(function(e){ seen.set(e.target,e.isIntersecting); if(e.isIntersecting&&!held){go(e.target);} else {e.target.pause();} }); },{threshold:0.3});
+      vs.forEach(function(v){ io.observe(v); });
+    }
+    lab();
+  })();
+
+  // printing video (with sound toggle)
+  (function(){
+    var v=document.getElementById('pvid'), pb=document.getElementById('pplay'), sb=document.getElementById('psound'); if(!v) return;
+    var v2=document.getElementById('pvid2'), seen2=false;
+    function go2(){ if(!v2) return; var q=v2.play(); if(q&&q.catch){q.catch(function(){});} }
+    v.addEventListener('play',function(){ if(seen2) go2(); });
+    v.addEventListener('pause',function(){ if(v2) v2.pause(); });
+    if(v2 && 'IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ seen2=e.isIntersecting; if(seen2 && !v.paused){go2();} else if(!seen2){v2.pause();} }); },{threshold:0.25}).observe(v2); }
+    function lab(){ pb.textContent=v.paused?'Play':'Pause'; pb.setAttribute('aria-pressed', v.paused?'true':'false'); }
+    function go(){ var p=v.play(); if(p&&p.catch){p.catch(lab);} }
+    pb.addEventListener('click',function(){ if(v.paused){go();}else{v.pause();} });
+    sb.addEventListener('click',function(){ v.muted=!v.muted; sb.textContent=v.muted?'Sound off':'Sound on'; sb.setAttribute('aria-pressed', v.muted?'false':'true'); if(!v.muted&&v.paused){go();} });
+    v.addEventListener('play',lab); v.addEventListener('pause',lab);
+    if(!reduce.matches && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){go();} else {v.pause();} }); },{threshold:0.25}).observe(v);
+    }
+    lab();
+  })();
+
+  // book video (silent)
+  (function(){
+    var v=document.getElementById('bvid'), pb=document.getElementById('bplay');
+    function lab(){ pb.textContent=v.paused?'Play':'Pause'; pb.setAttribute('aria-pressed', v.paused?'true':'false'); }
+    function go(){ var p=v.play(); if(p&&p.catch){p.catch(lab);} }
+    pb.addEventListener('click',function(){ if(v.paused){go();}else{v.pause();} });
+    v.addEventListener('play',lab); v.addEventListener('pause',lab);
+    if(!reduce.matches && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){go();} else {v.pause();} }); },{threshold:0.25}).observe(v);
+    }
+    lab();
+  })();
+
+  // digital reinterpretation video
+  (function(){
+    var v=document.getElementById('dvid'), pb=document.getElementById('dplay'), sb=document.getElementById('dsound');
+    function lab(){ pb.textContent=v.paused?'Play':'Pause'; pb.setAttribute('aria-pressed', v.paused?'true':'false'); }
+    function go(){ var p=v.play(); if(p&&p.catch){p.catch(lab);} }
+    pb.addEventListener('click',function(){ if(v.paused){go();}else{v.pause();} });
+    sb.addEventListener('click',function(){ v.muted=!v.muted; sb.textContent=v.muted?'Sound off':'Sound on'; sb.setAttribute('aria-pressed', v.muted?'false':'true'); if(!v.muted&&v.paused){go();} });
+    v.addEventListener('play',lab); v.addEventListener('pause',lab);
+    if(!reduce.matches && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){go();} else {v.pause();} }); },{threshold:0.25}).observe(v);
+    }
+    lab();
+  })();
+  function mark(){
+    var y=window.innerHeight*0.5, cur='opening';
+    secs.forEach(function(s){ if(s && s.getBoundingClientRect().top<y){ cur=s.id; } });
+    links.forEach(function(a){ a.setAttribute('aria-current', a.getAttribute('data-sec')===cur?'true':'false'); });
+  }
+  window.addEventListener('scroll',function(){ requestAnimationFrame(mark); },{passive:true});
+  mark();
+})();
+</script>
+</body>
+</html>
