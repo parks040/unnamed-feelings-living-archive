@@ -49,7 +49,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   background:linear-gradient(var(--bg) 40%, transparent);pointer-events:none}
 .bar > *{pointer-events:auto}
 .bar .label b{color:var(--fg);font-weight:500}
-.index{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+.index{display:flex;gap:4px;list-style:none;margin:0 0 0 auto;padding:0}
+.index a{padding:0 6px}
+.index .nm{display:none;margin-left:8px;color:var(--fg)}
+.index a[aria-current="true"] .nm{display:inline}
+.about-link{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;min-height:44px;margin-left:24px}
+.about-link:hover{opacity:.7}
 .index a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
 .index a[aria-current="true"]{color:var(--fg)}
 .index a:hover{color:var(--fg)}
@@ -327,18 +332,19 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
   <p class="label" style="color:var(--fg)">Somin Park</p>
   <nav aria-label="Chapters">
     <ol class="index">
-      <li><a href="#opening" data-sec="opening" aria-current="true">01 Sketching</a></li>
-      <li><a href="#limitation" data-sec="limitation">02 The Limitation</a></li>
-      <li><a href="#repetition" data-sec="repetition">03 Repetition</a></li>
-      <li><a href="#digital" data-sec="digital">04 Digital</a></li>
-      <li><a href="#book" data-sec="book">05 Book</a></li>
-      <li><a href="#archive" data-sec="archive">06 Archive</a></li>
-      <li><a href="#typeface" data-sec="typeface">07 Typeface</a></li>
-      <li><a href="#specimen" data-sec="specimen">08 Specimen</a></li>
-      <li><a href="#ascii" data-sec="ascii">09 ASCII</a></li>
-      <li><a href="#receipts" data-sec="receipts">10 Receipts</a></li>
+      <li><a href="#opening" data-sec="opening" title="01 Sketching" aria-label="01 Sketching" aria-current="true"><span class="n">01</span><span class="nm">Sketching</span></a></li>
+      <li><a href="#limitation" data-sec="limitation" title="02 The Limitation" aria-label="02 The Limitation"><span class="n">02</span><span class="nm">The Limitation</span></a></li>
+      <li><a href="#repetition" data-sec="repetition" title="03 Repetition" aria-label="03 Repetition"><span class="n">03</span><span class="nm">Repetition</span></a></li>
+      <li><a href="#digital" data-sec="digital" title="04 Digital" aria-label="04 Digital"><span class="n">04</span><span class="nm">Digital</span></a></li>
+      <li><a href="#book" data-sec="book" title="05 Book" aria-label="05 Book"><span class="n">05</span><span class="nm">Book</span></a></li>
+      <li><a href="#archive" data-sec="archive" title="06 Archive" aria-label="06 Archive"><span class="n">06</span><span class="nm">Archive</span></a></li>
+      <li><a href="#typeface" data-sec="typeface" title="07 Typeface" aria-label="07 Typeface"><span class="n">07</span><span class="nm">Typeface</span></a></li>
+      <li><a href="#specimen" data-sec="specimen" title="08 Specimen" aria-label="08 Specimen"><span class="n">08</span><span class="nm">Specimen</span></a></li>
+      <li><a href="#ascii" data-sec="ascii" title="09 ASCII" aria-label="09 ASCII"><span class="n">09</span><span class="nm">ASCII</span></a></li>
+      <li><a href="#receipts" data-sec="receipts" title="10 Receipts" aria-label="10 Receipts"><span class="n">10</span><span class="nm">Receipts</span></a></li>
     </ol>
   </nav>
+  <a class="about-link" href="about.html">About</a>
 </header>
 
 <main>
@@ -477,7 +483,7 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
     <div class="limit-head">
       <p class="label reveal"><a class="sec-link" href="https://parks040.github.io/unnamed-feelings/" target="_blank" rel="noopener">06 / The Anatomy of Unnamed Feelings &#x2197;&#xFE0E;</a></p>
     </div>
-    <p class="arch-intro reveal">I built a digital archive, The Anatomy of Unnamed Feelings, to turn the book’s index into something searchable. Each drawing is recorded with its original sentence, date, and visual qualities, so it can be compared with others that share the same sentence or word.</p>
+    <p class="arch-intro reveal">I built a digital archive, <em>The Anatomy of Unnamed Feelings</em>, to turn the book’s index into something searchable. Each drawing is recorded with its original sentence, date, and visual qualities, so it can be compared with others that share the same sentence or word.</p>
     <ol class="steps">
       <li class="step reveal" style="--d:.05s">
         <div class="shot"><video class="avid" src="media/arch-1-grid.mp4" poster="media/arch-1-grid.jpg" muted loop playsinline preload="metadata" aria-label="Screen recording: scrolling through the archive grid, drawings grouped under each date."></video></div>

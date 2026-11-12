@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About · Unnamed Feelings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600&family=Fraunces:opsz,wght,SOFT@9..144,300..400,0..100&display=swap">
+<style>
+:root{
+  --bg:#000000; --fg:#ffffff; --muted:#999999;
+  --soft:"Fraunces","Iowan Old Style",Georgia,serif;
+  --small:"Commissioner","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gutter-l:max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:dark;
+}
+@media (min-width:900px){ :root{ --gutter-l:max(48px, env(safe-area-inset-left, 0px)); --gutter-r:max(48px, env(safe-area-inset-right, 0px)); } }
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--fg);font-family:var(--small);-webkit-font-smoothing:antialiased}
+::selection{background:var(--fg);color:var(--bg)}
+:focus-visible{outline:1px solid var(--fg);outline-offset:3px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:18px;padding-left:var(--gutter-l);padding-right:var(--gutter-r);
+  background:linear-gradient(var(--bg) 40%, transparent)}
+.bar a{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.bar a:hover{opacity:.7}
+.bar a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px}
+main{padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:calc(env(safe-area-inset-top,0px) + 140px) 160px}
+.wrap{max-width:40rem;margin-left:max(0px, calc((100% - 1244px) / 2))}
+h1{margin:0 0 40px;font-family:var(--soft);font-weight:300;font-variation-settings:"SOFT" 100;font-size:clamp(36px,5vw,72px);line-height:1.05;letter-spacing:-.02em}
+.about-body{display:flex;flex-direction:column;gap:18px}
+.about-body em{font-style:italic}
+.about-body p{margin:0;font-size:16px;font-weight:300;line-height:1.75;color:var(--fg)}
+@media (min-width:900px){ .about-body p{font-size:17px} }
+</style>
+</head>
+<body>
+<header class="bar">
+  <a href="index.html">Somin Park</a>
+  <a href="about.html" aria-current="page">About</a>
+</header>
+<main>
+  <div class="wrap">
+    <h1>Unnamed Feelings</h1>
+    <div class="about-body">
+      <p>I’ve always been someone who feels things deeply. I’m sensitive to emotions, not only my own but also those of the people around me. I tend to notice subtle changes in how people feel, and I naturally try to understand their perspectives and experiences.</p>
+      <p>But throughout my life, I’ve often felt that while I try to understand others, I am not always understood in the same way. Sometimes, I wish people could see and experience the world the way I do, even just for a moment. I think this desire to be understood is one of the most personal reasons why I started <em>Unnamed Feelings</em>.</p>
+      <p>I also feel that many people go through their daily lives without taking the time to truly recognize or explore their emotions. We often simplify our feelings into a few familiar words, overlooking the subtle, complicated emotions that exist beneath them. A single feeling is never just one thing, and I believe there is so much more to our emotional experiences than we usually acknowledge.</p>
+      <p>Through this project, I want people to slow down and look more deeply into their own emotions, including the ones they may have overlooked or never had the words to describe.</p>
+      <p>I believe that the more deeply we experience and understand our emotions, the richer our perception of the world can become. When we become more attentive to what we feel, we may also become more sensitive to the small, beautiful things around us, such as the warmth of sunlight, a gentle breeze, someone’s voice, or a fleeting moment that might otherwise go unnoticed. I believe emotional richness can bring a deeper sense of appreciation and gratitude toward everyday life.</p>
+      <p>Beyond understanding ourselves, I hope this awareness can extend toward others. Everyone experiences the world differently, and I want people to recognize that their own perspective is not the only way of seeing or feeling.</p>
+      <p>Ultimately, <em>Unnamed Feelings</em> comes from both my desire to be understood and my hope that others will learn to understand themselves and one another more deeply.</p>
+      <p>I don’t want to tell people what they should feel. I want to create a space where they can discover feelings they didn’t know they had, appreciate the quiet beauty of ordinary moments, and perhaps see the world and each other with a little more empathy.</p>
+    </div>
+  </div>
+</main>
+</body>
+</html>
