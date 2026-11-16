@@ -104,6 +104,29 @@ html body .opening .intro-wrap{align-self:flex-start;margin-left:calc((100% - va
 html body .limit > .reflect, html body .limit > .rcpt-intro{display:block}
 html body .limit > .reflect p, html body .limit > .rcpt-intro p{display:inline}
 html body .limit > .reflect p + p::before, html body .limit > .rcpt-intro p + p::before{content:" "}
+/* 11 emotion lines */
+html body .limit.lines{padding-bottom:160px}
+.wip{font-weight:400;color:var(--muted);margin-left:10px;letter-spacing:.08em}
+.refs{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,56px);margin-top:16px}
+.ref{display:flex;flex-direction:column;gap:10px;min-width:0}
+.ref p,.rules p,.lines-src p{margin:0}
+.ref-t{font-size:15px;font-weight:300;line-height:1.7;color:var(--fg)}
+.ref-t strong,.rule-list strong{font-weight:500}
+.hand-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px)}
+.hand-pair .work img{aspect-ratio:auto}
+html body #lines > .hand-note{margin-top:-16px}
+.lines-full{margin:0;display:flex;flex-direction:column;gap:12px}
+.lines-full img{display:block;width:100%;height:auto}
+.lines-full figcaption{display:flex;flex-direction:column;gap:4px}
+.rules{display:flex;flex-direction:column;gap:12px}
+.rule-list{margin:0;padding-left:1.4em;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:10px 40px;font-size:15px;font-weight:300;line-height:1.6;color:var(--fg)}
+.rule-list li::marker{color:var(--muted);font-variant-numeric:tabular-nums}
+html body .lines-now{display:flex;flex-direction:column;align-items:flex-start;gap:14px}
+.lines-now p{margin:0}
+.question{font-family:var(--soft);font-weight:300;font-variation-settings:"SOFT" 100;font-size:clamp(22px,2.4vw,32px);line-height:1.25;color:var(--fg);max-width:32ch}
+.lines-src{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--line)}
+.lines-src a{color:var(--fg)}
+@media (max-width:720px){ .refs,.hand-pair,.rule-list{grid-template-columns:1fr} .rule-list{grid-auto-flow:row;grid-template-rows:none} }
 /* receipts: read one receipt at a time */
 .read{display:flex;flex-direction:column;gap:16px}
 html body #receipts > .read{margin-top:clamp(56px,8svh,96px)}
@@ -135,7 +158,7 @@ html.js body .reveal{opacity:1;transform:none;transition:none}
 /* same column and type as the video block above */
 .limit{display:flex;flex-direction:column;align-items:center;gap:32px;
   padding-left:var(--gutter-l);padding-right:var(--gutter-r);padding-block:48px 0}
-.limit.rcpt{padding-bottom:120px}
+.limit.rcpt{padding-bottom:0}
 .ascii{display:flex;flex-direction:column;gap:16px}
 .a-wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(16px,3vw,40px);align-items:start}
 .a-wrap .a-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -342,6 +365,7 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
       <li><a href="#specimen" data-sec="specimen" title="08 Specimen" aria-label="08 Specimen"><span class="n">08</span><span class="nm">Specimen</span></a></li>
       <li><a href="#ascii" data-sec="ascii" title="09 ASCII" aria-label="09 ASCII"><span class="n">09</span><span class="nm">ASCII</span></a></li>
       <li><a href="#receipts" data-sec="receipts" title="10 Receipts" aria-label="10 Receipts"><span class="n">10</span><span class="nm">Receipts</span></a></li>
+      <li><a href="#lines" data-sec="lines" title="11 Emotional Syntax" aria-label="11 Emotional Syntax"><span class="n">11</span><span class="nm">Emotional Syntax</span></a></li>
     </ol>
   </nav>
   <a class="about-link" href="about.html">About</a>
@@ -662,6 +686,66 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
     </div>
   </section>
 
+  <section class="limit lines" id="lines" aria-label="11, Emotional Syntax">
+    <div class="limit-head">
+      <p class="label reveal">11 / Emotional Syntax</p>
+    </div>
+    <div class="meta lines-intro">
+      <p class="t">Inspired by Brené Brown’s 87 emotions and Sol LeWitt’s rule-based drawings, I designed an abstract symbol for each emotion using simple lines. Rather than treating these symbols as fixed definitions of emotions, I use them as building blocks that can repeat and interact. As different emotions and their intensities are combined, the symbols form new patterns, reflecting how our feelings can coexist and change.</p>
+    </div>
+
+    <div class="refs">
+      <div class="ref">
+        <p class="cap-t">Research · Brené Brown</p>
+        <p class="ref-t">In <em>Atlas of the Heart</em> (2021), Brown maps 87 emotions and experiences in 13 categories. The study drew on 66,625 participants and more than 550,000 comments, narrowing about 150 emotions down to 87. Her idea of <strong>emotional granularity</strong>, the ability to tell emotions apart with precision, shows how feelings are more complex than the words we use for them.</p>
+      </div>
+      <div class="ref">
+        <p class="cap-t">Research · Sol LeWitt</p>
+        <p class="ref-t">I was inspired by Sol LeWitt’s <em>Wall Drawing #51</em> (1970), where he connected architectural points with straight lines using a simple rule. I was interested in how the same instruction could create different compositions depending on the space. Inspired by this, I used the four corners of a rectangle as fixed points, allowing lines representing different emotions to combine and form patterns.</p>
+      </div>
+    </div>
+
+    <div class="hand-pair">
+      <figure class="work">
+        <img src="media/lines-hand-1.webp" width="1344" height="1170" loading="lazy"
+          alt="Handwritten sheet of emotions 1 to 47, each name written in pen with a line drawn beneath it, such as a zigzag for Anxiety and a single circle for Humility.">
+        <figcaption><span class="cap-t">Line sketches</span><span class="cap-s">1–47</span></figcaption>
+      </figure>
+      <figure class="work">
+        <img src="media/lines-hand-2.webp" width="1371" height="1148" loading="lazy"
+          alt="Handwritten sheet of emotions 48 to 87, each with a pen line, such as two circles joined by a line for Tranquility and a crossed orbit for Joy.">
+        <figcaption><span class="cap-t">Line sketches</span><span class="cap-s">48–87</span></figcaption>
+      </figure>
+    </div>
+    <div class="meta hand-note">
+      <p class="t">I started by turning each emotion into a simple line, not to define what the emotion looks like, but to create something that could combine with other emotions. In my earlier sketches, I used colors and different materials to express what I was feeling. This time, I limited myself to just black lines. It was harder than I expected because I had to think about how to express each emotion with so little. I ended up spending much more time on these lines than I did on my earlier drawings.</p>
+    </div>
+
+    <figure class="lines-full">
+      <img src="media/lines-digital.webp" width="2400" height="2093" loading="lazy"
+        alt="All 87 emotion lines redrawn digitally as thin white strokes on black, arranged in a grid of ten columns, each labeled with its emotion from Stress to Tranquility.">
+      <figcaption><span class="cap-t">87 emotion lines</span><span class="cap-s">Redrawn digitally as one consistent set.</span></figcaption>
+    </figure>
+
+    <div class="rules">
+      <p class="cap-t">Rules</p>
+      <ol class="rule-list">
+        <li><strong>Emotion.</strong> Each emotion is one line.</li>
+        <li><strong>Placement.</strong> Lines can only start from or sit in the corners of a rectangle.</li>
+        <li><strong>Intensity.</strong> A line repeats more as the emotion grows stronger.</li>
+        <li><strong>Boundary.</strong> Every line stays inside the rectangle.</li>
+        <li><strong>Combination.</strong> Several emotions combine into one pattern, for example stress + overwhelm.</li>
+        <li><strong>Style.</strong> Black and white only, minimal and geometric.</li>
+      </ol>
+    </div>
+
+    <div class="lines-src">
+      <p class="cap-t">References</p>
+      <p class="cap-s">Brené Brown, <em>Atlas of the Heart: Mapping Meaningful Connection and the Language of Human Experience</em> (2021). <a href="https://brenebrown.com/the-research/" target="_blank" rel="noopener">Research</a> · <a href="https://brenebrown.com/wp-content/uploads/2023/02/87-Human-Emotions-and-Experiences_1Page.pdf" target="_blank" rel="noopener">87 Emotions and Experiences</a></p>
+      <p class="cap-s">Sol LeWitt, <em>Wall Drawing #51</em> (1970), blue snap lines; <em>Paragraphs on Conceptual Art</em> (1967).</p>
+    </div>
+  </section>
+
   <section hidden>
     <script type="application/json" id="gdata">{"A":[2,-103,855,793],"B":[3,-256,828,479],"C":[4,-128,828,679],"D":[5,-231,828,552],"E":[6,-209,834,582],"F":[7,-206,829,577],"G":[8,-170,830,660],"H":[9,-181,822,618],"I":[10,-28,840,877],"J":[11,-103,831,710],"K":[12,-248,834,535],"L":[13,-148,830,724],"M":[14,-109,822,788],"N":[15,-245,837,521],"O":[16,-192,824,604],"P":[17,-287,828,446],"Q":[18,-156,845,638],"R":[19,-239,838,554],"S":[20,-256,834,443],"T":[21,-167,840,621],"U":[22,-151,842,652],"V":[23,-37,815,816],"W":[24,-87,835,799],"X":[25,-176,832,621],"Y":[26,-184,825,543],"Z":[27,-217,833,557],"a":[28,-217,747,532],"b":[29,-281,761,463],"c":[30,-262,735,446],"d":[31,-237,758,463],"e":[32,-289,758,446],"f":[33,-198,744,566],"g":[34,-242,618,477],"h":[35,-259,794,463],"i":[36,-376,766,213],"j":[37,-234,754,393],"k":[38,-317,761,391],"l":[39,-384,762,213],"m":[40,-126,785,721],"n":[41,-264,794,463],"o":[42,-278,774,441],"p":[43,-281,723,466],"q":[44,-214,717,466],"r":[45,-281,779,435],"s":[46,-342,782,327],"t":[47,-231,760,491],"u":[48,-253,782,463],"v":[49,-317,774,382],"w":[50,-198,788,593],"x":[51,-353,778,299],"y":[52,-267,689,449],"z":[53,-278,773,407],"0":[54,-206,824,543],"1":[55,-198,855,554],"2":[56,-289,846,435],"3":[57,-273,842,449],"4":[58,-223,830,518],"5":[59,-278,831,438],"6":[60,-212,856,543],"7":[61,-262,840,402],"8":[62,-295,837,399],"9":[63,-220,825,532],".":[64,-120,875,179],",":[65,-145,806,171],":":[66,-403,766,185],";":[67,-398,766,179],"!":[68,-389,800,216],"?":[69,-362,800,352],"-":[70,-264,873,446],"(":[71,-134,800,410],")":[72,-445,800,413],"\u201c":[73,-387,750,249],"\u201d":[74,-370,700,252],"\u2018":[75,-412,1000,171],"\u2019":[76,-417,740,185],"\"":[77,-406,750,218],"'":[78,-406,750,152]," ":[null,0,0,320],"\u00a0":[null,0,0,320]}</script>
 
@@ -743,7 +827,7 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
 
   // chapter index follows the reader
   var links=document.querySelectorAll('.index a[data-sec]');
-  var secs=[document.getElementById('opening'),document.getElementById('limitation'),document.getElementById('repetition'),document.getElementById('digital'),document.getElementById('book'),document.getElementById('archive'),document.getElementById('typeface'),document.getElementById('specimen'),document.getElementById('ascii'),document.getElementById('receipts')];
+  var secs=[document.getElementById('opening'),document.getElementById('limitation'),document.getElementById('repetition'),document.getElementById('digital'),document.getElementById('book'),document.getElementById('archive'),document.getElementById('typeface'),document.getElementById('specimen'),document.getElementById('ascii'),document.getElementById('receipts'),document.getElementById('lines')];
 
   // read the receipts: one print preview per day
   (function(){
