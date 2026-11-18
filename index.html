@@ -127,6 +127,19 @@ html body .lines-now{display:flex;flex-direction:column;align-items:flex-start;g
 .lines-src{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--line)}
 .lines-src a{color:var(--fg)}
 @media (max-width:720px){ .refs,.hand-pair,.rule-list{grid-template-columns:1fr} .rule-list{grid-auto-flow:row;grid-template-rows:none} }
+.outcome{display:flex;flex-direction:column;gap:16px;margin-top:24px}
+.outcome .lines-full{margin:0}
+.syn-controls{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.syn-controls p{margin:0}
+.syn-btns{display:flex;gap:8px}
+.tp-pair{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2vw,24px);max-width:min(100%,88svh)}
+.tp-frame{aspect-ratio:9/16;overflow:hidden;background:#111}
+html body .tp-frame video,html body .tp-frame img{display:block;width:100%;height:100%;max-height:none;aspect-ratio:auto;object-fit:cover}
+.tp .syn-controls{max-width:min(100%,88svh)}
+a.btn{text-decoration:none;display:inline-flex;align-items:center}
+.syn-frame{position:relative;aspect-ratio:2880/1544;background:var(--panel)}
+.syn-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.outcome-t{margin:0;font-size:16px;font-weight:300;line-height:1.65;color:var(--fg)}
 /* receipts: read one receipt at a time */
 .read{display:flex;flex-direction:column;gap:16px}
 html body #receipts > .read{margin-top:clamp(56px,8svh,96px)}
@@ -505,7 +518,7 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
 
   <section class="limit arch" id="archive" aria-label="06, The Anatomy of Unnamed Feelings">
     <div class="limit-head">
-      <p class="label reveal"><a class="sec-link" href="https://parks040.github.io/unnamed-feelings/" target="_blank" rel="noopener">06 / The Anatomy of Unnamed Feelings &#x2197;&#xFE0E;</a></p>
+      <p class="label reveal">06 / The Anatomy of Unnamed Feelings</p>
     </div>
     <p class="arch-intro reveal">I built a digital archive, <em>The Anatomy of Unnamed Feelings</em>, to turn the book’s index into something searchable. Each drawing is recorded with its original sentence, date, and visual qualities, so it can be compared with others that share the same sentence or word.</p>
     <ol class="steps">
@@ -531,7 +544,7 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
       </li>
     </ol>
     <div class="arch-foot reveal">
-      <button class="btn" id="aplay" type="button" aria-pressed="false">Pause</button>
+      <span class="syn-btns"><button class="btn" id="aplay" type="button" aria-pressed="false">Pause</button><a class="btn" href="https://parks040.github.io/unnamed-feelings/" target="_blank" rel="noopener">Try it &#x2197;&#xFE0E;</a></span>
     </div>
   </section>
 
@@ -739,10 +752,46 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
       </ol>
     </div>
 
+    <div class="outcome">
+      <p class="cap-t">Outcome · Interactive tool</p>
+      <div class="syn-frame">
+        <video id="synvid" src="media/syntax-demo.mp4" poster="media/syntax-demo.jpg" muted loop playsinline preload="metadata"
+          aria-label="Screen recording of the tool: emotions are clicked one by one, from Sympathy to Dehumanization, and the square on the right fills with their combined lines while a new blended name appears above it. Shuffle redraws the pattern."></video>
+      </div>
+      <div class="syn-controls">
+        <p class="label">Screen recording · 00:12</p>
+        <span class="syn-btns"><button class="btn" id="synplay" type="button" aria-pressed="false">Pause</button><a class="btn" href="https://parks040.github.io/Emotional-Syntax/" target="_blank" rel="noopener">Try it &#x2197;&#xFE0E;</a></span>
+      </div>
+      <p class="t outcome-t">While I was working on the rectangle rule inspired by Sol LeWitt, I thought of John Koenig’s <em>The Dictionary of Obscure Sorrows</em>, which invents words for feelings that have no name yet, like <em>sonder</em>. I brought that idea into a website. Visitors choose the emotions they feel right now and raise or lower their intensity. Their lines combine into one pattern, and their names merge into a new emotion word, for example Happiness + Sadness + Loneliness = Happisadliness.</p>
+      <figure class="lines-full">
+        <img src="media/syntax-35.webp" width="2400" height="1720" loading="lazy"
+          alt="Thirty-five square patterns in a grid of seven by five, each made by the tool from a different combination of emotion lines: loops, zigzags, waves, rings, and straight strokes gathered toward the corners and crossing in white on black.">
+        <figcaption><span class="cap-t">35 patterns</span><span class="cap-s">Each square is a different combination of emotions and intensities.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="outcome tp">
+      <p class="cap-t">Outcome · Thermal print</p>
+      <div class="tp-pair">
+        <figure class="work">
+          <div class="tp-frame"><video id="tpvid" src="media/thermal-print.mp4" poster="media/thermal-print.jpg" muted loop playsinline preload="metadata"
+            aria-label="A black thermal printer feeding out a long strip of receipt paper printed with square line patterns, one after another."></video></div>
+          <figcaption><span class="cap-t">Printing</span><span class="cap-s">Patterns printed one after another on receipt paper.</span></figcaption>
+        </figure>
+        <figure class="work">
+          <div class="tp-frame"><img src="media/thermal-roll.webp" width="1080" height="1933" loading="lazy"
+            alt="The printed roll stretched across a wooden floor, a long strip of square line patterns."></div>
+          <figcaption><span class="cap-t">Printed roll</span><span class="cap-s">The full roll laid out on the floor.</span></figcaption>
+        </figure>
+      </div>
+      <div class="syn-controls"><p class="label">Video · 00:09</p><button class="btn" id="tpplay" type="button" aria-pressed="false">Pause</button></div>
+    </div>
+
     <div class="lines-src">
       <p class="cap-t">References</p>
       <p class="cap-s">Brené Brown, <em>Atlas of the Heart: Mapping Meaningful Connection and the Language of Human Experience</em> (2021). <a href="https://brenebrown.com/the-research/" target="_blank" rel="noopener">Research</a> · <a href="https://brenebrown.com/wp-content/uploads/2023/02/87-Human-Emotions-and-Experiences_1Page.pdf" target="_blank" rel="noopener">87 Emotions and Experiences</a></p>
       <p class="cap-s">Sol LeWitt, <em>Wall Drawing #51</em> (1970), blue snap lines; <em>Paragraphs on Conceptual Art</em> (1967).</p>
+      <p class="cap-s">John Koenig, <em>The Dictionary of Obscure Sorrows</em> (2021).</p>
     </div>
   </section>
 
@@ -935,6 +984,34 @@ html body #ascii > .asc-full{width:calc(100% + var(--gutter-l) + var(--gutter-r)
     v.addEventListener('play',lab); v.addEventListener('pause',lab);
     if(!reduce.matches && 'IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){go();} else {v.pause();} }); },{threshold:0.25}).observe(v);
+    }
+    lab();
+  })();
+
+  // thermal print video
+  (function(){
+    var v=document.getElementById('tpvid'), pb=document.getElementById('tpplay'); if(!v) return;
+    var held=false;
+    function lab(){ pb.textContent=v.paused?'Play':'Pause'; pb.setAttribute('aria-pressed', v.paused?'true':'false'); }
+    function go(){ var p=v.play(); if(p&&p.catch){p.catch(lab);} }
+    pb.addEventListener('click',function(){ if(v.paused){held=false;go();}else{held=true;v.pause();} });
+    v.addEventListener('play',lab); v.addEventListener('pause',lab);
+    if(!reduce.matches && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ if(!held) go(); } else {v.pause();} }); },{threshold:0.25}).observe(v);
+    }
+    lab();
+  })();
+
+  // emotional syntax demo video
+  (function(){
+    var v=document.getElementById('synvid'), pb=document.getElementById('synplay'); if(!v) return;
+    var held=false;
+    function lab(){ pb.textContent=v.paused?'Play':'Pause'; pb.setAttribute('aria-pressed', v.paused?'true':'false'); }
+    function go(){ var p=v.play(); if(p&&p.catch){p.catch(lab);} }
+    pb.addEventListener('click',function(){ if(v.paused){held=false;go();}else{held=true;v.pause();} });
+    v.addEventListener('play',lab); v.addEventListener('pause',lab);
+    if(!reduce.matches && 'IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ if(!held) go(); } else {v.pause();} }); },{threshold:0.25}).observe(v);
     }
     lab();
   })();
